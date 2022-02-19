@@ -7,6 +7,14 @@
 module.exports = {
   /* Your site config here */
   plugins: [
-    "gatsby-plugin-typescript"
+    "gatsby-plugin-typescript",
+    {
+      resolve: "gatsby-source-graphql",
+      options:{
+        typeName: 'Lollies',
+        fieldName: 'lollies',
+        url: 'https://shahzain-virtual-lolly.netlify.app'
+      }
+    }
   ],
 }

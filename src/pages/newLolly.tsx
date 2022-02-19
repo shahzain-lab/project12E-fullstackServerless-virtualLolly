@@ -1,39 +1,94 @@
 import React, { useState } from 'react';
 import Layout from '../layout/Layout';
 import Lolly from '../components/Lolly';
-import { useQuery, gql } from '@apollo/client';
+import gql from 'graphql-tag'
+import { useMutation, useQuery } from '@apollo/client';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-// const GET_HELLO = gql`
-// {
-//     hello
-// }`
+
+const GET_LOLLIES = gql`
+{
+  allLollies{
+    recName
+    message
+    senderName
+    flavorTop
+    flavorMiddle
+    flavorBottom
+    slug
+  }
+}
+`
+
+const CREATE_LOLLY = gql`
+ mutation createLolly( 
+      $recName: String!
+      $message: String!
+      $senderName: String!
+      $flavorTop: String! 
+      $flavorMiddle: String!
+      $flavorBottom: String!
+      $slug: String!
+               ){
+     createLolly(
+          recName: $recName
+          message: $message
+          senderName: $senderName
+          flavorTop: $flavorTop
+          flavorMiddle: $flavorMiddle
+          flavorBottom: $flavorBottom
+          slug: $slug
+         ){
+            slug
+    }
+}`;
 
 
 const newLolly = () => {
-    const [to, setTo] = useState('')
-    const [message, setMessage] = useState('')
-    const [from, setFrom] = useState('')
     const [clr1, setclr1] = useState('#fa43d2')
     const [clr2, setclr2] = useState("#fac219")
     const [clr3, setclr3] = useState("#fa73d9")
-    // const { loading, error, data } = useQuery(GET_HELLO)
+    const [createLolly] = useMutation(CREATE_LOLLY)
+    const { loading, error, data } = useQuery(GET_LOLLIES)
 
-    // if (loading) {
-    //     return (
-    //         <div>Loading...</div>
-    //     )
-    // }
-    // if (error) {
-    //     return (
-    //         <div>something wrong</div>
-    //     )
-    // }
-    // console.log(data);
+    if (loading) {
+        return (
+            <div>Loading...</div>
+        )
+    }
+    if (error) {
+        return (
+            <div>something wrong</div>
+        )
+    }
+    console.log(data);
+    const onSubmit = async (values: any, actions: any) => {
+        // const slug = shor.generate();
+        // console.log(slug);
+        const result = await createLolly({
+            variables: {
+                recName: values.to,
+                message: values.message,
+                senderName: values.from,
+                flavorTop: clr1,
+                flavorMiddle: clr2,
+                flavorBottom: clr3,
+                slug: "slug part",
+            },
+        });
+        console.log(result);
 
+        await actions.resetForm({
+            values: {
+                to: "",
+                message: "",
+                from: "",
+            },
+        });
+    }
     return <Layout>
-        {/* {data && data.hello && (<h1>{data.hello}</h1>)} */}
+        {data && data.results && data.results.ref && (<h1>{data.results.ref.id}</h1>)}
         <div className='lolly--page'>
             <div className='lolly--lollypicker'>
                 <Lolly fillLollyTop={clr1} fillLollyMiddle={clr2} fillLollyBottom={clr3} />
@@ -60,9 +115,7 @@ const newLolly = () => {
                             .required('Required'),
                         from: Yup.string().required('Name is Required'),
                     })}
-                    onSubmit={(values: any) => {
-
-                    }}
+                    onSubmit={onSubmit}
                 >
                     <Form
                         className='lolly--form'>
@@ -82,7 +135,7 @@ const newLolly = () => {
                 </Formik>
             </div>
         </div>
-    </Layout>;
+    </Layout >;
 };
 
 export default newLolly;
