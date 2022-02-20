@@ -2,7 +2,7 @@ import { graphql } from 'gatsby';
 import React from 'react'
 
 export const query = graphql`
-query MyQuery($slug: String!){
+query MyLolly($slug: String!){
     getLollyBySlug(slug: $slug){
         recName
         message
