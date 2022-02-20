@@ -5,6 +5,8 @@ import gql from 'graphql-tag'
 import { useMutation, useQuery } from '@apollo/client';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import shortid from 'shortid';
+import { navigate } from 'gatsby';
 
 
 const GET_LOLLIES = gql`
@@ -64,8 +66,8 @@ const newLolly = () => {
     }
     console.log(data);
     const onSubmit = async (values: any, actions: any) => {
-        // const slug = shor.generate();
-        // console.log(slug);
+        const slug = shortid.generate();
+        console.log(slug);
         const result = await createLolly({
             variables: {
                 recName: values.to,
@@ -74,7 +76,7 @@ const newLolly = () => {
                 flavorTop: clr1,
                 flavorMiddle: clr2,
                 flavorBottom: clr3,
-                slug: "slug part",
+                slug: slug,
             },
         });
         console.log(result);
@@ -86,6 +88,7 @@ const newLolly = () => {
                 from: "",
             },
         });
+        navigate(`/lollies/${slug}`)
     }
     return <Layout>
         {data && data.results && data.results.ref && (<h1>{data.results.ref.id}</h1>)}

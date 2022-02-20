@@ -14,7 +14,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    allLollies: [Lolly!]
+    allLollies: [Lolly]!
+    getLollyBySlug(slug: String!): Lolly
   }
 
   type Mutation{
@@ -62,6 +63,16 @@ const resolvers = {
         return err.toString()
       }
     },
+    getLollyBySlug: async({_, args}) => {
+      try{
+        const results = await client.query(
+          q.Get(q.Match(q.Index("lollies_by_slug"), args.slug))
+        )
+        return results.data
+      }catch(err) {
+        return err.toString()
+      }
+    }
   },
   Mutation: {
     createLolly: async(_, args) => {
@@ -71,6 +82,9 @@ const resolvers = {
             data: args
           })
         )
+
+        
+
         return results.data
       }catch(err){
         return err.toString()
