@@ -1,23 +1,23 @@
-import { graphql } from 'gatsby';
+// import { graphql } from 'gatsby';
 import React from 'react'
 
-export const query = graphql`
-query MyLolly($slug: String!){
-    getLollyBySlug(slug: $slug){
-        recName
-        message
-        senderName
-        flavorTop
-        flavorMiddle
-        flavorBottom
-    }
-  }
-`
+// export const query = graphql`
+// query MyLolly($slug: String!){
+//     getLollyBySlug(slug: $slug){
+//         recName
+//         message
+//         senderName
+//         flavorTop
+//         flavorMiddle
+//         flavorBottom
+//     }
+//   }
+// `
 
-const Lolly = ({ data }: any) => {
+const Lolly = ({ pageContext }: any) => {
     return (
         <div>Lolly
-            <h1>{data.getLollyBySlug.recName}</h1>
+            <h1>{pageContext.lolly.recName}</h1>
         </div>
     )
 }

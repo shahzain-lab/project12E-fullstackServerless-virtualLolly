@@ -6,7 +6,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import shortid from 'shortid';
-import { navigate } from 'gatsby';
+import { navigate } from 'gatsby'
 
 
 const GET_LOLLIES = gql`
