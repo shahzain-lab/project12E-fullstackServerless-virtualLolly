@@ -17,7 +17,7 @@ import React from 'react'
 const Lolly = ({ pageContext }: any) => {
     return (
         <div>Lolly
-            <h1>{pageContext.lolly.recName}</h1>
+            <h1>{pageContext.slug.recName}</h1>
         </div>
     )
 }

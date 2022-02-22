@@ -13,7 +13,7 @@ module.exports = {
       options:{
         typeName: 'Lollies',
         fieldName: 'lollies',
-        url: 'https://shahzain-virtual-lollies.netlify.app/.netlify/functions/newLolly'
+        url: 'https://shahzain-virtual-lollies.netlify.app//.netlify/functions/newLolly'
       }
     }
   ],
