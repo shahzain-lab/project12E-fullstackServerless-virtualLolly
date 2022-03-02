@@ -2,45 +2,40 @@ const path = require("path");
 
 
 exports.createPages = async({actions, graphql}) => {
-    const {data} = await graphql(`
-    query MyQuery{
-        allLollies{
-            recName
-            message
-            senderName
-            flavorTop
-            flavorMiddle
-            flavorBottom
-            slug
+    const query = await graphql(`
+    {
+        lollies{
+            allLollies{
+                slug
+            }
         }
       }
-    `)
+    `);
 
-    console.log(data);
-    
-    data?.allLollies.forEach(lolly => {
+    console.log(query?.data)
+    query?.data?.allLollies?.forEach(({slug}) => {
         actions.createPage({
-            path: `/lollies/${lolly.slug}`,
-            component: path.resolve('./src/template/lolly.tsx'),
+            path: `/lollies/${slug}`,
+            component: path.resolve('./src/template/lolly.js'),
             context: {
-                slug: lolly
+                slug: slug
             }
         })
     })
 }
 
-exports.onCreatePage = async ({ page, actions }) => {
-    const { createPage } = actions;
+// exports.onCreatePage = async ({ page, actions }) => {
+//     const { createPage } = actions;
   
-    // page.matchPath is a special key that’s used for matching pages
+//     // page.matchPath is a special key that’s used for matching pages
   
-    // only on the client.
+//     // only on the client.
   
-    if (page.path.match(/^\/lollies/)) {
-      page.matchPath = "/lollies/*";
+//     if (page.path.match(/^\/lollies/)) {
+//       page.matchPath = "/lollies/*";
   
-      // Update the page.
+//       // Update the page.
   
-      createPage(page);
-    }
-  };
+//       createPage(page);
+//     }
+//   };

@@ -22,7 +22,6 @@
     "gatsby": "^4.7.1",
     "gatsby-plugin-typescript": "^4.7.0",
     "gatsby-source-graphql": "^4.7.0",
-    "graphql": "^14.7.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "shortid": "^2.2.16",

@@ -47,7 +47,7 @@ const CREATE_LOLLY = gql`
 }`;
 
 
-const newLolly = () => {
+const NewLolly = () => {
     const [clr1, setclr1] = useState('#fa43d2')
     const [clr2, setclr2] = useState("#fac219")
     const [clr3, setclr3] = useState("#fa73d9")
@@ -141,4 +141,4 @@ const newLolly = () => {
     </Layout >;
 };
 
-export default newLolly;
+export default NewLolly;

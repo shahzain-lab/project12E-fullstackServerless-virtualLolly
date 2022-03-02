@@ -11,9 +11,9 @@ module.exports = {
     {
       resolve: "gatsby-source-graphql",
       options:{
-        typeName: 'Lollies',
+        typeName: 'lollies',
         fieldName: 'lollies',
-        url: 'https://shahzain-virtual-lollies.netlify.app//.netlify/functions/newLolly'
+        url: 'https://shahzain-virtual-lollies.netlify.app/.netlify/functions/newLolly'
       }
     }
   ],

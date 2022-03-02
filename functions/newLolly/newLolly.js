@@ -17,6 +17,8 @@ const typeDefs = gql`
 
   type Query {
     allLollies: [Lolly]!
+    getLollyBySlug(slug: String!): Lolly
+
   }
 
   type Mutation{
@@ -67,7 +69,7 @@ const resolvers = {
     // getLollyBySlug: async(_, {slug}) => {
     //   try{
     //     const results = await client.query(
-    //       q.Get(q.Match(q.Index("lollies_by_slug"), slug))
+    //       q.Get(q.Match(q.Index("lollies_by_slug")))
     //     )
     //     return results.data
     //   }catch(err) {
@@ -84,7 +86,7 @@ const resolvers = {
           })
         )
 
-        axios.post("https://api.netlify.com/build_hooks/621239a8132c87ae19a52a2d").then(res => console.log(res)).catch(err => console.log(err))
+        // axios.post("https://api.netlify.com/build_hooks/621239a8132c87ae19a52a2d").then(res => console.log(res)).catch(err => console.log(err))
 
         return results.data
       }catch(err){
