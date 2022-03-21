@@ -1,24 +1,35 @@
-const path = require("path");
 
 
 exports.createPages = async({actions, graphql}) => {
-    const query = await graphql(`
+    const {data} = await graphql(`
     {
-        lollies{
+        Lollies{
             allLollies{
+                recName
+                message
+                senderName
+                flavorTop
+                flavorMiddle
+                flavorBottom
                 slug
             }
         }
       }
     `);
 
-    console.log(query?.data)
-    query?.data?.allLollies?.forEach(({slug}) => {
+    console.log("gatsby-node", data)
+    data?.Lollies?.allLollies.forEach(({recName, message, senderName, flavorTop, flavorMiddle,flavorBottom, slug}) => {
         actions.createPage({
             path: `/lollies/${slug}`,
-            component: path.resolve('./src/template/lolly.js'),
+            component: require.resolve('./src/templates/lolly.tsx'),
             context: {
-                slug: slug
+                recName,
+                message,
+                senderName,
+                flavorTop,
+                flavorMiddle,
+                flavorBottom,
+                slug
             }
         })
     })
